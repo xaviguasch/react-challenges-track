@@ -1,19 +1,27 @@
-import React from 'react'
+import { useState } from 'react'
+
+import './PasswordInput.css'
 
 function PasswordInput({ minimum = 8 }) {
-  const inputValue = ''
-  const isInputValueVisible = false
-  const thresholdMet = false
+  const [inputValue, setInputValue] = useState('')
+  const [isInputValueVisible, setVisible] = useState(false)
 
-  const handleChange = () => {}
+  const thresholdMet = inputValue.length >= minimum
 
-  const handleToggleVisibility = () => {}
+  const handleChange = (e) => {
+    setInputValue(e.target.value)
+  }
+
+  const handleToggleVisibility = () => {
+    setVisible((prevState) => !prevState)
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
     if (thresholdMet) {
       alert('Password submitted')
+      setInputValue('')
     } else {
       alert('You need a longer password')
     }
@@ -34,6 +42,9 @@ function PasswordInput({ minimum = 8 }) {
           onChange={handleChange}
         />
       </div>
+      <span onClick={handleToggleVisibility}>
+        {isInputValueVisible ? 'hide password 🙈' : 'show password 🙊'}
+      </span>
     </form>
   )
 }
